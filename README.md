@@ -111,7 +111,6 @@ Eshell V15.2.5 (press Ctrl+G to abort, type help(). for help)
 -2
 10> test_actor:dec().
 -3
-11> q()
-    .
+11> q().
 ok
 ```
