@@ -48,7 +48,7 @@ pub const subject_name = "test_actor"
 
 pub type Message {
   Inc(caller: process.Subject(Int))
-  Dec(callse: process.Subject(Int))
+  Dec(caller: process.Subject(Int))
 }
 
 pub fn start() {
