@@ -3,5 +3,5 @@
 
 'receive'() ->
   receive
-    Value -> {ok, Value}
+    Value -> Value
   end.
