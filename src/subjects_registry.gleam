@@ -88,14 +88,14 @@ pub fn call(
   process.call(resolve(id), make_request, timeout)
 }
 
-/// Resolve and asynchronously call a named subject,
-/// rejects any response
-pub fn send(id: String, message: message) -> Nil {
-  process.send(resolve(id), message)
-}
-
 /// Reply to subject's message.
 /// This is plain re-export `process.send` function for convenient
 pub fn reply(subject: process.Subject(message), message: message) -> Nil {
   process.send(subject, message)
+}
+
+/// Resolve and asynchronously call a named subject,
+/// rejects any response
+pub fn send(id: String, message: message) -> Nil {
+  reply(resolve(id), message)
 }
