@@ -78,16 +78,6 @@ pub fn register(id: String, subject: process.Subject(message)) {
   Nil
 }
 
-/// Resolve and synchronously call a named subject,
-/// returning response message
-pub fn call(
-  id: String,
-  make_request: fn(process.Subject(response)) -> request,
-  within timeout: Int,
-) -> response {
-  process.call(resolve(id), make_request, timeout)
-}
-
 /// Reply to subject's message.
 /// This is plain re-export `process.send` function for convenient
 pub fn reply(subject: process.Subject(message), message: message) -> Nil {
@@ -98,4 +88,14 @@ pub fn reply(subject: process.Subject(message), message: message) -> Nil {
 /// rejects any response
 pub fn send(id: String, message: message) -> Nil {
   reply(resolve(id), message)
+}
+
+/// Resolve and synchronously call a named subject,
+/// returning response message
+pub fn call(
+  id: String,
+  make_request: fn(process.Subject(response)) -> request,
+  within timeout: Int,
+) -> response {
+  process.call(resolve(id), make_request, timeout)
 }
