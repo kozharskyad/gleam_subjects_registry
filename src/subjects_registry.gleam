@@ -29,6 +29,7 @@ fn registry_atom() {
   atom.create_from_string(server_id)
 }
 
+/// Start registry, returning new process's PID
 pub fn start() {
   let registry_pid = process.start(registry_init, True)
   raw_send(registry_pid, ParentPid(process.self()))
@@ -61,6 +62,7 @@ fn registry_loop(state: dict.Dict(String, process.Subject(message))) {
   registry_loop(state)
 }
 
+/// Get subject from registry by string ID
 pub fn resolve(id: String) {
   let assert Ok(registry_pid) = process.named(registry_atom())
   raw_send(registry_pid, Get(process.self(), id))
@@ -68,6 +70,7 @@ pub fn resolve(id: String) {
   subject
 }
 
+/// Put subject to registry with string ID
 pub fn register(id: String, subject: process.Subject(message)) {
   let assert Ok(registry_pid) = process.named(registry_atom())
   raw_send(registry_pid, Put(process.self(), id, subject))
@@ -75,6 +78,8 @@ pub fn register(id: String, subject: process.Subject(message)) {
   Nil
 }
 
+/// Resolve and synchronously call a named subject,
+/// returning response message
 pub fn call(
   id: String,
   make_request: fn(process.Subject(response)) -> request,
@@ -83,10 +88,14 @@ pub fn call(
   process.call(resolve(id), make_request, timeout)
 }
 
+/// Resolve and asynchronously call a named subject,
+/// rejects any response
 pub fn send(id: String, message: message) -> Nil {
   process.send(resolve(id), message)
 }
 
+/// Reply to subject's message.
+/// This is plain re-export `process.send` function for convenient
 pub fn reply(subject: process.Subject(message), message: message) -> Nil {
   process.send(subject, message)
 }
