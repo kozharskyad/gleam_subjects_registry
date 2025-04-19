@@ -6,6 +6,8 @@ Singleton registry for OTP Actor subjects.
 
 ## Example usage
 
+### Sources
+
 ```toml
 # gleam.toml
 ...
@@ -77,4 +79,39 @@ pub fn inc() {
 pub fn dec() {
   subjects_registry.call(subject_name, Dec, within: 1000)
 }
+```
+
+### Run example
+
+```bash
+$ gleam shell
+  Compiling testproj3
+   Compiled in 0.17s
+    Running Erlang shell
+Erlang/OTP 27 [erts-15.2.5] [source] [64-bit] [smp:14:14] [ds:14:14:10] [async-threads:1] [jit] [dtrace]
+
+Eshell V15.2.5 (press Ctrl+G to abort, type help(). for help)
+1> main:main().
+{ok,<0.86.0>}
+2> test_actor:inc().
+1
+3> test_actor:inc().
+2
+4> test_actor:inc().
+3
+5> test_actor:dec().
+2
+6> test_actor:dec().
+1
+7> test_actor:dec().
+0
+8> test_actor:dec().
+-1
+9> test_actor:dec().
+-2
+10> test_actor:dec().
+-3
+11> q()
+    .
+ok
 ```
