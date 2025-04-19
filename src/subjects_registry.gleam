@@ -106,7 +106,7 @@ pub fn register(id: String, subject: process.Subject(message)) {
   receive_register()
 }
 
-/// Reply to subject's message.
+/// Reply to caller's message.
 /// This is plain re-export `process.send` function for convenient
 pub fn reply(subject: process.Subject(message), message: message) {
   process.send(subject, message)

@@ -53,7 +53,7 @@ pub type Message {
 
 pub fn start() {
   let assert Ok(subject) = actor.start(0, handle_messages)
-  subjects_registry.register(subject_name, subject)
+  let assert Ok(_) = subjects_registry.register(subject_name, subject)
   Ok(process.subject_owner(subject))
 }
 
@@ -83,7 +83,7 @@ pub fn dec() {
 
 ### Run example
 
-```bash
+```erlang
 $ gleam shell
   Compiling testproj3
    Compiled in 0.17s
@@ -94,23 +94,15 @@ Eshell V15.2.5 (press Ctrl+G to abort, type help(). for help)
 1> main:main().
 {ok,<0.86.0>}
 2> test_actor:inc().
-1
+{ok,1}
 3> test_actor:inc().
-2
-4> test_actor:inc().
-3
+{ok,2}
+4> test_actor:dec().
+{ok,1}
 5> test_actor:dec().
-2
+{ok,0}
 6> test_actor:dec().
-1
+{ok,-1}
 7> test_actor:dec().
-0
-8> test_actor:dec().
--1
-9> test_actor:dec().
--2
-10> test_actor:dec().
--3
-11> q().
-ok
+{ok,-2}
 ```
